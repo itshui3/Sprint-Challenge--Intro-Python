@@ -1,5 +1,13 @@
 # Create a class to hold a city location. Call the class "City". It should have
 # fields for name, lat and lon (representing latitude and longitude).
+class City:
+    def __init__(self, name, lat, lon):
+        self.name = name
+        self.lat = lat
+        self.lon = lon
+
+    def __repr__(self):
+        return f"<Name:{self.name}, Lat: {self.lat}, Lon: {self.lon}>"
 
 
 # We have a collection of US cities with population over 750,000 stored in the
@@ -14,13 +22,21 @@
 #
 # Note that the first line of the CSV is header that describes the fields--this
 # should not be loaded into a City object.
+import csv
 cities = []
 
 def cityreader(cities=[]):
   # TODO Implement the functionality to read from the 'cities.csv' file
   # For each city record, create a new City instance and add it to the 
   # `cities` list
-    
+    with open('./src/cityreader/cities.csv', 'r') as csv_cities_file:
+        csv_cities = csv.reader(csv_cities_file)
+        next(csv_cities)
+        for city in csv_cities:
+            name = city[0]
+            lat = city[3]
+            lon = city[4]
+            cities.append(City(str(name), float(lat), float(lon)))
     return cities
 
 cityreader(cities)
@@ -62,10 +78,27 @@ for c in cities:
 
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
   # within will hold the cities that fall within the specified region
-  within = []
+    within = []
+
+    greaterLat = lat1 if lat1 > lat2 else lat2
+    lesserLat = lat2 if lat1 > lat2 else lat1
+    greaterLon = lon1 if lon1 > lon2 else lon2
+    lesserLon = lon2 if lon1 > lon2 else lon1
+
+    with open('./src/cityreader/cities.csv', 'r') as csv_cities_file:
+      csv_cities = csv.reader(csv_cities_file)
+      next(csv_cities)
+      for city in csv_cities:
+          name = city[0]
+          lat = float(city[3])
+          lon = float(city[4])
+
+          if(lat < greaterLat and lat > lesserLat and lon < greaterLon and lon > lesserLon):
+              within.append(City(name, lat, lon))
 
   # TODO Ensure that the lat and lon valuse are all floats
   # Go through each city and check to see if it falls within 
   # the specified coordinates.
 
-  return within
+    return within
+
