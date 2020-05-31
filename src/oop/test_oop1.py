@@ -40,5 +40,5 @@ class Oop1Tests(unittest.TestCase):
     self.assertTrue(isinstance(self.motorcycle, Vehicle)) 
 
 
-if __name__ == '__main__':
-  unittest.main()
+# if __name__ == '__main__':
+unittest.main(verbosity=2)
