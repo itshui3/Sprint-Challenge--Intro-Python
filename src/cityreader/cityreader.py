@@ -112,9 +112,9 @@ def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
   else: max_lon, min_lon = lon2, lon1
 
   within = []
+  
   for c in cities:
-    if max_lat > c.lat > min_lat and max_lon > c.lon > min_lon:
-      within.append(c)
+    if max_lat > c.lat > min_lat and max_lon > c.lon > min_lon: within.append(c)
 
   return within
 
