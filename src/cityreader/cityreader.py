@@ -90,10 +90,32 @@ for c in cities:
 
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
   # within will hold the cities that fall within the specified region
-  within = []
+  # Understand
+  # Seems inconsistent
+  # Therefore because the larger value indicates a max_wall
+  # and the smaller value represents a min_wall
+  # values must be greater than the min_wall and smaller than the max_wall
+  # in lat and lon respectively to be filtered into the new list
+  
+  # plan:
+  # therefore, we first need to determine which is larger/smaller
+  # then write logic to filter stuff out that fulfils the 4 greater/less than conditions
+  # we will need to be careful with this logic and double check that the ramifications are
+  # what we intend
 
-  # TODO Ensure that the lat and lon valuse are all floats
-  # Go through each city and check to see if it falls within 
-  # the specified coordinates.
+  max_lat = min_lat = max_lon = min_lon = None
+
+  if lat1 > lat2: max_lat, min_lat = lat1, lat2
+  else: max_lat, min_lat = lat2, lat1
+
+  if lon1 > lon2:max_lon, min_lon = lon1, lon2
+  else: max_lon, min_lon = lon2, lon1
+
+  within = []
+  for c in cities:
+    if max_lat > c.lat > min_lat and max_lon > c.lon > min_lon:
+      within.append(c)
 
   return within
+
+cityreader_stretch(32, -120, 45, -100, cities)
